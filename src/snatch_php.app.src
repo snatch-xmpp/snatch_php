@@ -1,0 +1,11 @@
+{application, snatch_php, [
+    {description, "Snatch PHP"},
+    {vsn, git},
+    {registered, []},
+    {applications, [kernel,
+                    stdlib,
+                    snatch]},
+    {env, []},
+    {maintainers, ["Manuel Rubio"]},
+    {licenses, ["Apache License 2.1"]},
+    {links, [{"Github", "https://github.com/snatch-xmpp/snatch_phsnatch_php
