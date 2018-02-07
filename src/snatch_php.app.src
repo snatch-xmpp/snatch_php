@@ -4,8 +4,10 @@
     {registered, []},
     {applications, [kernel,
                     stdlib,
+                    ephp,
                     snatch]},
     {env, []},
     {maintainers, ["Manuel Rubio"]},
     {licenses, ["Apache License 2.1"]},
-    {links, [{"Github", "https://github.com/snatch-xmpp/snatch_phsnatch_php
+    {links, [{"Github", "https://github.com/snatch-xmpp/snatch_php"}]}
+]}.
