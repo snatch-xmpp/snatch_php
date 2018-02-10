@@ -6,19 +6,24 @@
 
 -include_lib("snatch/include/snatch.hrl").
 -include_lib("fast_xml/include/fxml.hrl").
+-include_lib("ephp/include/ephp.hrl").
 
 -record(state, {
     code,
     name :: binary()
 }).
 
-init({file, Script}) ->
+init([{file, Script}]) ->
+    application:set_env(ephp, modules, ?MODULES),
+    PhpIni = application:get_env(snatch_php, php_ini, ?PHP_INI_FILE),
+    ephp_config:start_link(PhpIni),
     case catch ephp_parser:file(Script) of
         {error, eparse, Line, _ErrorLevel, Data} ->
             error_logger:error_msg("parse error line ~p: ~p", [Line, Data]),
             erlang:error(badarg);
         Compiled ->
-            {ok, #state{code = Compiled, name = Script}}
+            AbsFilename = list_to_binary(filename:absname(Script)),
+            {ok, #state{code = Compiled, name = AbsFilename}}
     end.
 
 handle_info({connected, _Claw}, State) ->
@@ -41,17 +46,20 @@ handle_info({received, Packet}, State) ->
 
 terminate(_Reason, _State) ->
     ok.
-
-run(Packet, Via, #state{code = Code}) ->
-    {ok, Ctx} = ephp:context_new(),
-    publish(Ctx, <<"packet">>, Packet),
-    publish(Ctx, <<"via">>, Via),
-    catch ephp_interpr:process(Ctx, Code, false),
+-include_lib("eunit/include/eunit.hrl").
+run(Packet, Via, #state{code = Code, name = Filename}) ->
+    {ok, Ctx} = ephp:context_new(Filename),
+    %% register superglobals
+    ephp:register_var(Ctx, <<"packet">>, tr(Packet)),
+    ephp:register_var(Ctx, <<"via">>, tr(Via)),
+    ephp:register_module(Ctx, ephp_lib_snatch),
+    case catch ephp_interpr:process(Ctx, Code, false) of
+        {ok, _Return} ->
+            ok;
+        {error, Reason, _Index, Level, _Data} ->
+            error_logger:error_msg("PHP ~s: ~s", [Level, Reason])
+    end,
     ephp_shutdown:shutdown(Ctx),
-    ok.
-
-publish(Ctx, VarName, Content) ->
-    ephp:register_var(Ctx, VarName, tr(Content)),
     ok.
 
 tr(Bool) when is_boolean(Bool) -> Bool;
@@ -65,6 +73,7 @@ tr(#xmlel{name = Name, attrs = Attrs, children = Children}) ->
     ]);
 tr({xmlcdata, Text}) ->
     Text;
+tr(Binary) when is_binary(Binary) -> Binary;
 tr(#via{jid = JID, exchange = Exchange, id = ID, claws = Claws}) ->
     ephp_array:from_list([
         {<<"claws">>, atom_to_binary(Claws, utf8)},
