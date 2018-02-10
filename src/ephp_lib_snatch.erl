@@ -57,4 +57,4 @@ snatch_jid_is_full(_Ctx, _Line, {_, JID}) ->
     snatch_jid:is_full(JID).
 
 snatch_bare_jid(_Ctx, _Line, {_, JID}) ->
-    snatch_jid:bare_jid(JID).
+    snatch_jid:to_bare(JID).
