@@ -6,8 +6,8 @@ $text = strrev($_REQUEST["children"][0]["children"][0]);
 $response = [
     "name" => "message",
     "attrs" => [
-        "from" => $attrs["from"],
-        "to" => $attrs["to"],
+        "from" => $attrs["to"],
+        "to" => $attrs["from"],
         "id" => $attrs["id"],
         "type" => $attrs["type"]
     ],
@@ -21,4 +21,4 @@ $response = [
 
 var_dump($response);
 
-snatch_send($response, $attrs["to"]);
+snatch_send($response, $attrs["from"]);
