@@ -1,0 +1,34 @@
+<functional>
+    <config>
+        <snatch module="snatch_php">
+            <arg key="file" type="string">test/reply_to_bare.php</arg>
+        </snatch>
+    </config>
+
+    <steps>
+        <step name="echo">
+            <vars>
+                <value key="id">test_bot</value>
+                <value key="user">bob@localhost/pc</value>
+                <value key="bare_user">bob@localhost</value>
+                <value key="component">alice.localhost</value>
+            </vars>
+            <send>
+                <message type="chat"
+                         from="{{user}}"
+                         to="{{component}}"
+                         id="{{id}}">
+                    <body>Hello world!</body>
+                </message>
+            </send>
+            <expected>
+                <message type="chat"
+                         from="{{component}}"
+                         to="{{bare_user}}"
+                         id="{{id}}">
+                    <body>Hey there!</body>
+                </message>
+            </expected>
+        </step>
+    </steps>
+</functional>
