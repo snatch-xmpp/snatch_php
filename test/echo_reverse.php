@@ -1,7 +1,7 @@
 <?php
 
-$attrs = $packet["attrs"];
-$text = strrev($packet["children"][0]["children"][0]);
+$attrs = $_REQUEST["attrs"];
+$text = strrev($_REQUEST["children"][0]["children"][0]);
 
 $response = [
     "name" => "message",
@@ -18,5 +18,7 @@ $response = [
         ]
     ]
 ];
+
+var_dump($response);
 
 snatch_send($response, $attrs["to"]);

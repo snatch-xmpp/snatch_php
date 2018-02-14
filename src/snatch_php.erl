@@ -46,21 +46,45 @@ handle_info({received, Packet}, State) ->
 
 terminate(_Reason, _State) ->
     ok.
--include_lib("eunit/include/eunit.hrl").
+
+output(_Ctx, <<>>) ->
+    ok;
+output(_Ctx, Text) ->
+    error_logger:info_msg("PHP Output: ~s", [Text]),
+    ok.
+
 run(Packet, Via, #state{code = Code, name = Filename}) ->
     {ok, Ctx} = ephp:context_new(Filename),
+    OutputRef = ephp_context:get_output_handler(Ctx),
+    case application:get_env(snatch_php, output, true) of
+        true ->
+            ephp_output:set_output_handler(OutputRef, fun output/2);
+        false ->
+            ephp_output:set_output_handler(OutputRef, undefined)
+    end,
+    ephp_output:set_flush_handler(OutputRef, fun(_) -> ok end),
     %% register superglobals
-    ephp:register_var(Ctx, <<"packet">>, tr(Packet)),
-    ephp:register_var(Ctx, <<"via">>, tr(Via)),
+    ephp:register_var(Ctx, <<"_SERVER">>, get_server_var(Via)),
+    ephp:register_var(Ctx, <<"_REQUEST">>, tr(Packet)),
     ephp:register_module(Ctx, ephp_lib_snatch),
     case catch ephp_interpr:process(Ctx, Code, false) of
         {ok, _Return} ->
             ok;
         {error, Reason, _Index, Level, _Data} ->
-            error_logger:error_msg("PHP ~s: ~s", [Level, Reason])
+            error_logger:error_msg("PHP Error: ~s: ~s", [Level, Reason])
     end,
     ephp_shutdown:shutdown(Ctx),
+    ephp_context:destroy_all(Ctx),
     ok.
+
+get_server_var(undefined) ->
+    ephp_array:from_list([{<<"METHOD">>, <<"unknown">>}]);
+get_server_var(#via{claws = Claws, jid = JID, id = ID, exchange = Exchange}) ->
+    ephp_array:from_list([{<<"METHOD">>, atom_to_binary(Claws, utf8)},
+                          {<<"JID">>, JID},
+                          {<<"ID">>, ID},
+                          {<<"EXCHANGE">>, Exchange}]).
+
 
 tr(Bool) when is_boolean(Bool) -> Bool;
 tr(undefined) -> undefined;
@@ -73,11 +97,4 @@ tr(#xmlel{name = Name, attrs = Attrs, children = Children}) ->
     ]);
 tr({xmlcdata, Text}) ->
     Text;
-tr(Binary) when is_binary(Binary) -> Binary;
-tr(#via{jid = JID, exchange = Exchange, id = ID, claws = Claws}) ->
-    ephp_array:from_list([
-        {<<"claws">>, atom_to_binary(Claws, utf8)},
-        {<<"id">>, ID},
-        {<<"exchange">>, Exchange},
-        {<<"jid">>, JID}
-    ]).
+tr(Binary) when is_binary(Binary) -> Binary.
