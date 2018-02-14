@@ -1,6 +1,6 @@
 <?php
 
-$attrs = $_REQUEST["attrs"];
+$attrs = &$_REQUEST["attrs"];
 $text = strrev($_REQUEST["children"][0]["children"][0]);
 
 $response = [

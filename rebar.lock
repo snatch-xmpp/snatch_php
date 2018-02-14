@@ -1,7 +1,7 @@
 {"1.1.0",
 [{<<"ephp">>,
   {git,"https://github.com/bragful/ephp",
-       {ref,"c131650721ebf462e84929a4a10ea839a1c372a5"}},
+       {ref,"821e2dbac9bdcfdfdc7fb8b3cf4d74c473951776"}},
   0},
  {<<"ezic">>,
   {git,"https://github.com/waj/ezic.git",

@@ -1,6 +1,6 @@
 <?php
 
-$attrs = $_REQUEST["attrs"];
+$attrs = &$_REQUEST["attrs"];
 $bare_jid = snatch_bare_jid($attrs["from"]);
 
 $response = [
