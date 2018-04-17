@@ -1,12 +1,11 @@
 @author "Manuel Rubio" <manuel@altenwald.com>
-@copyright 2017 Manuel Rubio 
+@copyright 2017-2018 Manuel Rubio 
 @title Snatch PHP
 
 @doc
 <a href="https://travis-ci.org/snatch-xmpp/snatch_php"><img src="https://img.shields.io/travis/snatch-xmpp/snatch_php/master.svg" alt="Build Status"/></a>
 <a href="https://codecov.io/gh/snatch-xmpp/snatch_php"><img src="https://img.shields.io/codecov/c/github/snatch-xmpp/snatch_php.svg" alt="Codecov"/></a>
 <a href="https://raw.githubusercontent.com/snatch-xmpp/snatch_php/master/LICENSE"><img src="https://img.shields.io/github/license/snatch-xmpp/snatch_php.svg" alt="License: Apache 2.0"/></a>
-<a href="https://hex.pm/packages/snatch_php"><img alt="Hex" src="https://img.shields.io/hexpm/v/snatch_php.svg"/></a>
 
 Snatch PHP is an extension for [snatch](https://github.com/snatch-xmpp/snatch) to provide to the system of a way use PHP to handle the incoming information from the claws.
 
