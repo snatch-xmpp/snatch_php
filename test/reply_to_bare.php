@@ -21,4 +21,5 @@ $response = [
 
 print "received response from ${attrs['to']} send back to $bare_jid";
 
-snatch_send($response, $bare_jid);
+if (snatch_jid_is_full($attrs["from"]) and !snatch_jid_is_full($bare_jid))
+    snatch_send($response, $bare_jid);

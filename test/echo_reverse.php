@@ -2,23 +2,7 @@
 
 $attrs = &$_REQUEST["attrs"];
 $text = strrev($_REQUEST["children"][0]["children"][0]);
-
-$response = [
-    "name" => "message",
-    "attrs" => [
-        "from" => $attrs["to"],
-        "to" => $attrs["from"],
-        "id" => $attrs["id"],
-        "type" => $attrs["type"]
-    ],
-    "children" => [
-        [
-            "name" => "body",
-            "children" => [$text]
-        ]
-    ]
-];
-
-var_dump($response);
-
-snatch_send($response, $attrs["from"]);
+$payload = [["name" => "body", "children" => [$text]]];
+snatch_send_binary(snatch_message($attrs["to"], $attrs["from"],
+                                  $attrs["id"], $attrs["type"],
+                                  $payload));

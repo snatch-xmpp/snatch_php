@@ -12,7 +12,7 @@
                 <value key="user">bob@localhost/pc</value>
                 <value key="component">alice.localhost</value>
             </vars>
-            <send>
+            <send via="true">
                 <message type="chat"
                          from="{{user}}"
                          to="{{component}}"

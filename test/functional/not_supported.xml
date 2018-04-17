@@ -1,0 +1,57 @@
+<functional>
+    <config>
+        <snatch module="snatch_php">
+            <arg key="file" type="string">test/not_supported.php</arg>
+        </snatch>
+    </config>
+
+    <steps>
+        <step name="errors">
+            <vars>
+                <value key="id">test_bot</value>
+                <value key="user">bob@localhost/pc</value>
+                <value key="component">alice.localhost</value>
+            </vars>
+            <send>
+                <iq type="get"
+                    from="{{user}}"
+                    to="{{component}}"
+                    id="{{id}}">
+                    <ping xmlns="urn:xmpp:ping:0"/>
+                </iq>
+            </send>
+            <expected>
+                <iq type="error"
+                    from="{{component}}"
+                    to="{{user}}"
+                    id="{{id}}">
+                    <ping xmlns="urn:xmpp:ping:0"/>
+                    <error code='501' type='cancel'>
+                        <feature-not-implemented xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/>
+                    </error>
+                </iq>
+            </expected>
+            <send>
+                <message from="{{user}}"
+                         to="{{component}}"
+                         id="{{id}}"/>
+            </send>
+            <expected>
+                <message type="error"
+                         from="{{component}}"
+                         to="{{user}}"
+                         id="{{id}}">
+                    <error code='503' type='cancel'>
+                        <service-unavailable xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/>
+                    </error>
+                </message>
+                <iq type="get"
+                    from="{{component}}"
+                    to="{{user}}"
+                    id="1234">
+                    <ping xmlns="urn:xmpp:ping:1"/>
+                </iq>
+            </expected>
+        </step>
+    </steps>
+</functional>

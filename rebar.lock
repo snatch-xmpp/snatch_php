@@ -1,7 +1,7 @@
 {"1.1.0",
 [{<<"ephp">>,
   {git,"https://github.com/bragful/ephp",
-       {ref,"821e2dbac9bdcfdfdc7fb8b3cf4d74c473951776"}},
+       {ref,"7ca98d04abd072a0e5821a72d8a48de6c43958ca"}},
   0},
  {<<"ezic">>,
   {git,"https://github.com/waj/ezic.git",
@@ -10,7 +10,7 @@
  {<<"fast_xml">>,{pkg,<<"fast_xml">>,<<"1.1.24">>},1},
  {<<"p1_utils">>,{pkg,<<"p1_utils">>,<<"1.0.10">>},2},
  {<<"recon">>,{pkg,<<"recon">>,<<"2.3.2">>},1},
- {<<"snatch">>,{pkg,<<"snatch">>,<<"0.2.1">>},0},
+ {<<"snatch">>,{pkg,<<"snatch">>,<<"0.3.0">>},0},
  {<<"unistring">>,
   {git,"https://github.com/altenwald/unistring.git",
        {ref,"9edbf2afc049d1a7b47d2ec054de04b9bcf5d095"}},
@@ -24,5 +24,5 @@
  {<<"fast_xml">>, <<"66F0D9FC52A862013806C1474B3335A818A33156F68F83C6538A17B6A26DB422">>},
  {<<"p1_utils">>, <<"A6D6927114BAC79CF6468A10824125492034AF7071ADC6ED5EBC4DDB443845D4">>},
  {<<"recon">>, <<"4444C879BE323B1B133EEC5241CB84BD3821EA194C740D75617E106BE4744318">>},
- {<<"snatch">>, <<"0FB2526AF6A6B9E8D82E85541783049EBD6CB86BC9D4A5433248146F64C21E31">>}]}
+ {<<"snatch">>, <<"F1E228D19F115E9E7D8D03218D9A5019AF7D0917D9D6B3ADEDD109D97869B917">>}]}
 ].
