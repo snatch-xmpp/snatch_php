@@ -20,7 +20,7 @@ The system requires OTP 19+ and we prefer to use [rebar3](http://www.rebar3.org)
 
 ```erlang
 {deps, [
-    {snatch_php, "0.1.0"}
+    {snatch_php, {git, "https://github.com/snatch-xmpp/snatch-php", "0.2.0"}}
 ]}
 ```
 
@@ -28,7 +28,7 @@ Or if you are using [erlang.mk](https://erlang.mk) instead, you can use:
 
 ```Makefile
 DEPS += snatch_php 
-dep_snatch = git https://github.com/snatch-xmpp/snatch_php.git 0.1.0
+dep_snatch = git https://github.com/snatch-xmpp/snatch_php.git 0.2.0
 ```
 
 You'll need a C/C++ compiler installed in your system for [fast_xml](https://github.com/processone/fast_xml) and [stringprep](https://github.com/processone/stringprep).
@@ -38,7 +38,7 @@ For further information [check this doc](doc/how-to/snatch_php.md).
 Troubleshooting
 ---------------
 
-Feel free to create an issue in github to point a bug, flaw or improvement and even send a pull request with a specific change. Read the [LICENSE](http://github.com/snatch-xmpp/snatch_fcm/blob/master/doc/LICENSE) if you have doubts about what you can do with the code.
+Feel free to create an issue in github to point a bug, flaw or improvement and even send a pull request with a specific change. Read the [LICENSE](http://github.com/snatch-xmpp/snatch-php/blob/master/doc/LICENSE) if you have doubts about what you can do with the code.
 
 Enjoy!
 
@@ -47,5 +47,6 @@ Enjoy!
 
 
 <table width="100%" border="0" summary="list of modules">
-<tr><td><a href="http://github.com/snatch-xmpp/snatch_fcm/blob/master/doc/snatch_php.md" class="module">snatch_php</a></td></tr></table>
+<tr><td><a href="http://github.com/snatch-xmpp/snatch-php/blob/master/doc/ephp_lib_snatch.md" class="module">ephp_lib_snatch</a></td></tr>
+<tr><td><a href="http://github.com/snatch-xmpp/snatch-php/blob/master/doc/snatch_php.md" class="module">snatch_php</a></td></tr></table>
 
