@@ -26,13 +26,24 @@ The system requires OTP 19+ and we prefer to use [rebar3](http://www.rebar3.org)
 Or if you are using [erlang.mk](https://erlang.mk) instead, you can use:
 
 ```Makefile
-DEPS += snatch_php 
+DEPS += snatch_php
 dep_snatch = git https://github.com/snatch-xmpp/snatch_php.git 0.2.0
 ```
 
 You'll need a C/C++ compiler installed in your system for [fast_xml](https://github.com/processone/fast_xml) and [stringprep](https://github.com/processone/stringprep).
 
 For further information [check this doc](doc/how-to/snatch_php.md).
+
+Getting Started
+---------------
+
+First of all, you need to have clear the concepts behind XMPP. What's a XMPP Server? What's a XMPP Component? How works XMPP? You don't need to be an expert but you have to have an acknowledge about those concepts before start.
+
+What we are going to create this time is a bot client. This means we're not going to use it as XMPP Component. We are going to create the client to perform the auth against a XMPP Server and then wait for incoming requests from other clients.
+
+The most tricky part will be the roster concept to add to others when the real users wanted to add to us in their rosters.
+
+You can follow [the whole text here](https://medium.com/@bosqueviejo/developing-a-bot-using-tdd-on-erlang-without-write-a-single-line-of-code-in-erlang-5278e28b0356)
 
 Troubleshooting
 ---------------
